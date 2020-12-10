@@ -8,7 +8,6 @@ $neutral-color: #777;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
   .secondary {
     &__bg {
       background-color: $secondary-color;
@@ -17,7 +16,6 @@ $neutral-color: #777;
       color: $secondary-color;
     }
   }
-
   .primary {
     &__bg {
       background-color: $primary-color;
@@ -26,7 +24,6 @@ $neutral-color: #777;
       color: $primary-color;
     }
   }
-  
   .btn-link {
     color: $secondary-color;
     &:hover {
@@ -38,6 +35,10 @@ $neutral-color: #777;
   }
   .badge-secondary {
     background-color:$primary-color;
+  }
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $primary-color;
+    border-color: $primary-color;
   }
 }
 

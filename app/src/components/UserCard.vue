@@ -1,7 +1,7 @@
 <template lang="pug">
   #UserCard
       b-list-group-item.mt-2.d-flex.align-items-center(button
-        @click="setUser('set')"
+        @click="setUser()"
       )
         b-avatar.mr-3(
           badge="8"
@@ -42,6 +42,7 @@ export default {
       selectedUser: {}
     };
   },
+  computed: {},
   methods: {
     getUserInitials() {
       if (this.user) {
@@ -62,6 +63,7 @@ export default {
       console.log("to be deleted")
     },
     setUser() {
+      console.log("set user", this.selectedUser)
       if (!Object.keys(this.selectedUser).length || this.selectedUser !== this.user) {
         this.selectedUser = this.user;
         return;
@@ -70,9 +72,6 @@ export default {
         this.selectedUser = {}
         return;
       }
-
-      
-
     }
   },
 };

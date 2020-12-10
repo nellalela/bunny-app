@@ -11,7 +11,6 @@
 </template>
 <script> 
 import UserCard from "@/components/UserCard.vue";
-import * as _ from "lodash";
 
 export default {
   name: "Users",
@@ -36,7 +35,7 @@ export default {
   methods: {
     async addUser() {
       console.log("users")
-      this.users.push(_.cloneDeep(this.user));
+      this.users.push({...this.user});
     }
   },
   mounted() {}

@@ -6,17 +6,19 @@
       b-col(md="4")
         UserList
       b-col(md="6")
-        UserList
+        TaskList
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import UserList from "@/components/UserList.vue";
+import TaskList from "@/components/TaskList.vue";
 export default {
   name: "Home",
   components: {
     Header,
-    UserList
+    UserList,
+    TaskList
   }
 }
 </script>
