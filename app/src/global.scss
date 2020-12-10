@@ -1,5 +1,6 @@
 $primary-color: #e87d1c;
 $secondary-color: #232b42;
+$neutral-color: #777;
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -7,10 +8,36 @@ $secondary-color: #232b42;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
 
-.secondary {
-  &__bg {
+  .secondary {
+    &__bg {
+      background-color: $secondary-color;
+    }
+    &__color {
+      color: $secondary-color;
+    }
+  }
+
+  .primary {
+    &__bg {
+      background-color: $primary-color;
+    }
+    &__color {
+      color: $primary-color;
+    }
+  }
+  
+  .btn-link {
+    color: $secondary-color;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  .badge-primary {
     background-color: $secondary-color;
   }
+  .badge-secondary {
+    background-color:$primary-color;
+  }
 }
+
