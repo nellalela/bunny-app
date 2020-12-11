@@ -23,11 +23,11 @@ module.exports = {
   },
   /**
    * This function deletes a user from the db and delete related tasks
-   * @param { userId: string }
+   * @param { id: string }
    */
 
   delete: async (req, res) => {
-    const params = sanitize(req.allParams());
+    const params = req.allParams();
     const query = {id: params.id };
     try {
       const result = await User.destroyOne(query);
@@ -39,7 +39,10 @@ module.exports = {
   },
    /**
    * This function updates a user
-   * @param {user: object}
+   * @param {
+   * id: string
+   * name: string
+   * }
    */
   update: async (req, res) => {
     const params = sanitize(req.allParams());
