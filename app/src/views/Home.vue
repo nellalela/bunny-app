@@ -3,9 +3,9 @@
     Header
     b-container.py-5
     b-row.d-flex.justify-content-around
-      b-col(md="4")
+      b-col.mb-5(md="4")
         UserList
-      b-col(md="6")
+      b-col.mb-5(md="6")
         TaskList
 </template>
 

@@ -4,7 +4,7 @@
         @click="setUser()"
       )
         b-avatar.mr-3(
-          badge="8"
+          :badge="getUsersTasks()"
           :text="getUserInitials()")
         b-form-input(
           @change="updateUser($event)"
@@ -39,10 +39,24 @@ export default {
       name: "",
       userInitials: "",
       isEditing: false,
-      selectedUser: {}
     };
   },
-  computed: {},
+  computed: {
+    users() {
+      return this.$store.state.users;
+    },
+    tasks() {
+      return this.$store.state.tasks;
+    },
+    selectedUser: {
+      get() {
+        return this.$store.state.selectedUser;
+      },
+      set(value) {
+        this.$store.commit("setSelectedUser", value);
+      }
+    }
+  },
   methods: {
     getUserInitials() {
       if (this.user) {
@@ -56,14 +70,40 @@ export default {
         return this.userInitials.toUpperCase();
       }
     },
+    getUsersTasks() {
+      let tasks = this.tasks.filter(task => task.userId == this.user.id)
+      tasks = tasks.length.toString();
+      return tasks
+    },
     toggleEditing() {
       this.isEditing = !this.isEditing;
     },
-    deleteUser() {
-      console.log("to be deleted")
+    async updateUser(value) {
+      if (this.user.id) {
+        const params = { name: value, id: this.user.id };
+        const update = await this.$store.dispatch("updateUser", params);
+        if (update.status == 200) {
+          this.isEditing = false;
+          this.$store.dispatch("getUsers");
+        }
+      } else {
+        const update = await this.$store.dispatch("createUser", value);
+        if (update.status == 200) {
+          this.$store.dispatch("getUsers");
+        }
+      }
+    },
+    async deleteUser() {
+      const params = this.user.id;
+      const deleted = await this.$store.dispatch("deleteUser", params);
+      if (deleted.status == 200) {
+        this.$store.dispatch("getUsers");
+        this.$store.dispatch("getTasks");
+      }
     },
     setUser() {
       console.log("set user", this.selectedUser)
+      
       if (!Object.keys(this.selectedUser).length || this.selectedUser !== this.user) {
         this.selectedUser = this.user;
         return;

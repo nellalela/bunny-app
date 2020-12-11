@@ -42,16 +42,46 @@ export default {
       isEditing: false,
     };
   },
-  computed: {},
+  computed: {
+    selectedUser() {
+      return this.$store.state.selectedUser;
+    },
+    users() {
+      return this.$store.state.users;
+    }
+  },
   methods: {
     toggleEditing() {
       this.isEditing = !this.isEditing;
     },
-    deleteTask() {
-      console.log("delete tast")
+    getTaskUser() {
+      const userName = this.users.filter(user => user.id == this.task.userId)
+        return userName.name
     },
-    updateTask(value, key) {
+   async deleteTask() {
+      console.log("delete task")
+      const params = this.task.id;
+      const deleted = await this.$store.dispatch("deleteTask", params);
+      if (deleted.status == 200) {
+        this.$store.dispatch("getTasks");
+      }
+    },
+    async updateTask(value, key) {
       console.log(value, key, "value")
+      if (this.task.id) {
+        const params = { toUpdate: value, id: this.task.id, key: key};
+        const update = await this.$store.dispatch("updateTask", params);
+        if (update.status == 200) {
+          this.isEditing = false;
+          this.$store.dispatch("getTasks");
+        }
+      } else {
+        const params = { description: value, userId: this.selectedUser.id };
+        const update = await this.$store.dispatch("createTask", params);
+        if (update.status == 200) {
+          this.$store.dispatch("getTasks");
+        }
+      }
     },
   }
 };

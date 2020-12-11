@@ -16,29 +16,25 @@ export default {
   name: "Users",
   components: { UserCard },
   data() {
-    return {
-      users: [
-        {
-        name: "Nelly Ram",
-        id: "123"
-        },
-        {
-        name: "Diana Ram",
-        id: "456"
-        }
-      ],
-      user: {
-      name: "",
-      }
+    return {}
+  },
+  computed: {
+    users() {
+      return this.$store.state.users;
     }
   },
   methods: {
+    async getUsers() {
+      await this.$store.dispatch("getUsers");
+    },
     async addUser() {
       console.log("users")
-      this.users.push({...this.user});
+      this.$store.state.users.push({...this.$store.state.user});
     }
   },
-  mounted() {}
+  async mounted() {
+    await this.getUsers();
+  }
 };
 </script>
 
