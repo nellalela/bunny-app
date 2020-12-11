@@ -37,4 +37,8 @@ module.exports.routes = {
  'PUT /api/v1/user/:id'          : 'UserController.update',
  'GET /api/v1/users'             : 'UserController.getAll',
 
+ 'POST   /api/v1/task'           : 'TaskController.create',
+ 'DELETE /api/v1/task/:id'       : 'TaskController.delete',
+ 'PUT /api/v1/task/:id'          : 'TaskController.update',
+ 'GET /api/v1/tasks'             : 'TaskController.getAll',
 };

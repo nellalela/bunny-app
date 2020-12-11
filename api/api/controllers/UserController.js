@@ -29,9 +29,15 @@ module.exports = {
   delete: async (req, res) => {
     const params = req.allParams();
     const query = {id: params.id };
+    const queryTasks = { userId: params.id };
     try {
       const result = await User.destroyOne(query);
-      return res.send(result);
+      if(result) {
+        await Task.destroy(queryTasks);
+        res.send(result);
+      } else {
+        res.status(404);
+      }  
     } catch(err) {
       console.log(err)
       return res.status(err.status).send(err.message);

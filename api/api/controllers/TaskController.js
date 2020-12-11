@@ -22,6 +22,7 @@ module.exports = {
       const result = await Task.create(params);
       return res.send(result);
     } catch (err) {
+      console.log(err)
       return res.status(err.status).send(err);
     }
   },
@@ -36,7 +37,8 @@ module.exports = {
       const result = await Task.destroyOne(query);
       return res.send(result);
     } catch(err) {
-      return res.send(err);
+      console.log(err)
+      return res.status(err.status).send(err);
     }
   },
   /**
@@ -48,13 +50,16 @@ module.exports = {
    */
   update: async (req, res) => {
     const params = sanitize(req.allParams());
+    console.log(params, "params")
     const query = {id: params.id };
     const valuesToSet = {[params.key]: params.toUpdate};
     try {
+      console.log(query, valuesToSet, "VALUES")
       const result = await Task.updateOne(query).set(valuesToSet);
       res.send(result);
     } catch(err) {
-      return res.send(err);
+      console.log(err)
+      return res.status(err.status).send(err);
     }
   },
   /**
@@ -64,13 +69,10 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       const result = await Task.find();
-      if (result) {
-        res.send(result);
-      } else {
-        res.sendStatus(404)
-      }
+      res.send(result);
     } catch(err) {
-      return res.send(err);
+      console.log(err)
+      return res.status(err.status).send(err);
     }
   },
   
