@@ -13,6 +13,9 @@ module.exports = {
    */
   create: async (req, res) => {
     const params = sanitize(req.allParams());
+    const nameInitials = await sails.helpers.getNameInitials(params.name);
+    console.log(nameInitials, "initials")
+    params.nameInitials = nameInitials;
     try {
       const result = await User.create(params);
       return res.send(result);
@@ -53,7 +56,8 @@ module.exports = {
   update: async (req, res) => {
     const params = sanitize(req.allParams());
     const query = {id: params.id };
-    const valuesToSet = {name: params.name};
+    const nameInitials = await sails.helpers.getNameInitials(params.name);
+    const valuesToSet = {name: params.name, nameInitials: nameInitials};
     try {
       const result = await User.updateOne(query).set(valuesToSet);
       res.send(result);
@@ -78,8 +82,7 @@ module.exports = {
       console.log(err)
       return res.status(err.status).send(err.message);
     }
-  },
-
+  }
 };
 
 

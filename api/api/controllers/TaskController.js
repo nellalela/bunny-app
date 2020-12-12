@@ -50,11 +50,9 @@ module.exports = {
    */
   update: async (req, res) => {
     const params = sanitize(req.allParams());
-    console.log(params, "params")
     const query = {id: params.id };
     const valuesToSet = {[params.key]: params.toUpdate};
     try {
-      console.log(query, valuesToSet, "VALUES")
       const result = await Task.updateOne(query).set(valuesToSet);
       res.send(result);
     } catch(err) {

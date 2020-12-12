@@ -15,6 +15,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    nameInitials: {
+      type: 'string',
+      required: true
+    }
   },
 };
 
