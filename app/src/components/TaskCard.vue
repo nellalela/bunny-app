@@ -1,6 +1,5 @@
 <template lang="pug">
-  #TaskCard
-    b-list-group-item.mt-2.d-flex.align-items-center
+    li.list-group-item.mt-2.d-flex.align-items-center
       b-form-checkbox.mr-auto(
         @change="updateTask($event, 'status')"
         v-model="status"
@@ -10,11 +9,16 @@
       ) 
         b-form-input(
           @change="updateTask($event, 'description')"
-          v-if="isEditing || !task.description "
-          v-model="name"
+          v-if="isEditing || !task.id "
+          v-model="task.description"
           placeholder="Enter task"
         )
-        span(v-if="!isEditing") {{task.description}}
+        span(v-if="!isEditing && task.id") {{task.description}}
+      b-avatar(
+        v-if="taskOwner"
+        size="sm"
+        :text="taskOwner.nameInitials"
+      )
       b-button(
             @click="toggleEditing"
             size="sm"
@@ -31,35 +35,49 @@
               font-scale="1")
       
 </template>
-<script> 
+<script>
 export default {
   name: "TaskCard",
   props: { task: Object },
   data() {
     return {
       status: this.task.status,
-      name: "",
       isEditing: false,
     };
   },
   computed: {
-    selectedUser() {
-      return this.$store.state.selectedUser;
+    selectedUser: {
+      get() {
+        return this.$store.state.selectedUser;
+      },
+      set(value) {
+        this.$store.commit("setSelectedUser", value);
+      },
     },
     users() {
       return this.$store.state.users;
-    }
+    },
+    taskOwner() {
+      return this.users.find(user => user.id == this.task.userId)
+    },
+    filteredTasks: {
+      get() {
+        return this.$store.state.filteredTasks;
+      },
+      set(value) {
+       this.$store.commit("setfilteredTasks", value);
+      },
+    },
   },
   methods: {
     toggleEditing() {
       this.isEditing = !this.isEditing;
     },
     getTaskUser() {
-      const userName = this.users.filter(user => user.id == this.task.userId)
-        return userName.name
+      const userName = this.users.filter((user) => user.id == this.task.userId);
+      return userName.name;
     },
-   async deleteTask() {
-      console.log("delete task")
+    async deleteTask() {
       const params = this.task.id;
       const deleted = await this.$store.dispatch("deleteTask", params);
       if (deleted.status == 200) {
@@ -67,9 +85,8 @@ export default {
       }
     },
     async updateTask(value, key) {
-      console.log(value, key, "value")
       if (this.task.id) {
-        const params = { toUpdate: value, id: this.task.id, key: key};
+        const params = { toUpdate: value, id: this.task.id, key: key };
         const update = await this.$store.dispatch("updateTask", params);
         if (update.status == 200) {
           this.isEditing = false;
@@ -79,20 +96,13 @@ export default {
         const params = { description: value, userId: this.selectedUser.id };
         const update = await this.$store.dispatch("createTask", params);
         if (update.status == 200) {
+          console.log("create get task")
           this.$store.dispatch("getTasks");
         }
       }
     },
-  }
+  },
 };
 </script>
 
-
-<style lang="scss">
-#TaskCard {
-  .list-group-item {
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  }
-}
-</style>
+<style lang="scss"></style>

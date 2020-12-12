@@ -13,6 +13,7 @@ export default new Vuex.Store({
 
     users: [],
     tasks: [],
+    filteredTasks: [],
     selectedUser:{},
     user: {
       name: "",
@@ -26,6 +27,9 @@ export default new Vuex.Store({
   mutations: {
     setSelectedUser(state, value) {
       state.selectedUser = value;
+    },
+    setfilteredTasks(state, value) {
+      state.filteredTasks = value;
     }
   },
   actions: {
@@ -42,7 +46,6 @@ export default new Vuex.Store({
       return user
     },
     async updateUser({ state }, fields) {
-      console.log(fields, "dispatch")
       const url = state.host + "user/" + fields.id;
       const params = { name: fields.name }
       const user = await axios.put(url, params)
@@ -65,10 +68,8 @@ export default new Vuex.Store({
       return task
     },
     async updateTask({ state }, fields) {
-      console.log(fields, "dispatch")
       const url = state.host + "task/" + fields.id;
       const params = { toUpdate: fields.toUpdate, key: fields.key}
-      console.log(params, "params")
       const task = await axios.put(url, params)
       return task
     },

@@ -7,7 +7,7 @@ $neutral-color: #777;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $secondary-color;
   .secondary {
     &__bg {
       background-color: $secondary-color;
@@ -39,6 +39,9 @@ $neutral-color: #777;
   .custom-control-input:checked ~ .custom-control-label::before {
     background-color: $primary-color;
     border-color: $primary-color;
+  }
+  button:focus {
+    outline-color: #e87d1c;
   }
 }
 

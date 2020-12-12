@@ -1,33 +1,35 @@
 <template lang="pug">
-  #UserCard
-      b-list-group-item.mt-2.d-flex.align-items-center(button
-        @click="setUser()"
-      )
-        b-avatar.mr-3(
-          :badge="getUsersTasks()"
-          :text="getUserInitials()")
-        b-form-input(
-          @change="updateUser($event)"
-          v-if="isEditing || !user.name "
-          v-model="name"
-          placeholder="Enter name"
-        )
-        span.mr-auto(v-if="!isEditing") {{user.name}}
-        b-button(
-          @click="toggleEditing"
-          size="sm"
-          variant="link")
-          b-icon(
-            icon="pencil-fill"
-            font-scale="1")
-        b-button(
-          @click="deleteUser"
-          size="sm"
-          variant="link")
-          b-icon(
-            icon="trash-fill"
-            font-scale="1")
-    
+#UserCard
+  b-list-group-item.user.mt-2.d-flex.align-items-center(
+    button
+    @click="setUser()"
+    v-bind:class="{ 'active' : isSelected }"
+  )
+    b-avatar.mr-3(
+      :badge="getUsersTasks()"
+      :text="user.nameInitials")
+    b-form-input(
+      @change="updateUser($event)"
+      v-if="isEditing || !user.id"
+      v-model="user.name"
+      :placeholder="!user.id ? '' : 'Enter name'"
+    )
+    span.mr-auto(v-if="!isEditing && user.id") {{user.name}}
+    b-button(
+      @click="toggleEditing"
+      size="sm"
+      variant="link")
+      b-icon(
+        icon="pencil-fill"
+        font-scale="1")
+    b-button(
+      @click="deleteUser"
+      size="sm"
+      variant="link")
+      b-icon(
+        icon="trash-fill"
+        font-scale="1")
+
 
 </template>
 <script>
@@ -36,9 +38,8 @@ export default {
   props: { user: Object },
   data() {
     return {
-      name: "",
-      userInitials: "",
       isEditing: false,
+      isSelected: false,
     };
   },
   computed: {
@@ -54,26 +55,27 @@ export default {
       },
       set(value) {
         this.$store.commit("setSelectedUser", value);
-      }
-    }
+      },
+    },
+    filteredTasks: {
+      get() {
+        return this.$store.state.filteredTasks;
+      },
+      set(value) {
+        this.$store.commit("setfilteredTasks", value);
+      },
+    },
+  },
+  watch: {
+    tasks() {
+      this.filterTasks();
+    },
   },
   methods: {
-    getUserInitials() {
-      if (this.user) {
-        let nameArray = this.user["name"].trim().split(" ");
-        if (nameArray.length === 1)
-          this.userInitials = `${nameArray[0].charAt(0)}`;
-        else
-          this.userInitials = `${nameArray[0].charAt(0)}${nameArray[
-            nameArray.length - 1
-          ].charAt(0)}`;
-        return this.userInitials.toUpperCase();
-      }
-    },
     getUsersTasks() {
-      let tasks = this.tasks.filter(task => task.userId == this.user.id)
+      let tasks = this.tasks.filter((task) => task.userId == this.user.id);
       tasks = tasks.length.toString();
-      return tasks
+      return tasks;
     },
     toggleEditing() {
       this.isEditing = !this.isEditing;
@@ -89,27 +91,50 @@ export default {
       } else {
         const update = await this.$store.dispatch("createUser", value);
         if (update.status == 200) {
+          console.log("sillego")
+          this.selectedUser = {};
+          this.filterTasks();
+          this.isSelected = !this.isSelected;
           this.$store.dispatch("getUsers");
         }
+        
       }
     },
     async deleteUser() {
       const params = this.user.id;
       const deleted = await this.$store.dispatch("deleteUser", params);
       if (deleted.status == 200) {
+        this.selectedUser = {};
+        this.filterTasks();
         this.$store.dispatch("getUsers");
         this.$store.dispatch("getTasks");
       }
     },
     setUser() {
-      console.log("set user", this.selectedUser)
-      
-      if (!Object.keys(this.selectedUser).length || this.selectedUser !== this.user) {
-        this.selectedUser = this.user;
-        return;
+      let el = document.querySelector(".active");
+      if (el) {
+        el.classList.remove("active");
       }
-      else {
-        this.selectedUser = {}
+      this.isSelected = !this.isSelected;
+      console.log(this.isSelected, this.selectedUser,"set user")
+      if(Object.keys(this.selectedUser).length == 0 || this.selectedUser !== this.user || this.isEditing ) {
+        this.selectedUser = this.user;
+      } else {
+        console.log("aqui")
+        this.selectedUser = {};
+      }
+      this.filterTasks();
+    }, 
+    filterTasks() {
+      if(Object.keys(this.selectedUser).length == 0) {
+        console.log("no filtar")
+        this.filteredTasks = this.tasks;
+        return;
+      } else {
+         console.log("filtar")
+          this.filteredTasks = this.tasks.filter(
+          (task) => task.userId == this.selectedUser.id
+        );
         return;
       }
     }
@@ -117,4 +142,11 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#UserCard {
+  .list-group-item.active {
+    background-color: #f6f6f6;
+    color:  #232b42;
+  }
+}
+</style>

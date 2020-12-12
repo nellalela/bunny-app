@@ -18,8 +18,8 @@ export default {
   components: {
     Header,
     UserList,
-    TaskList
-  }
-}
+    TaskList,
+  },
+};
 </script>
 <style lang="scss"></style>
