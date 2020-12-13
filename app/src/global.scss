@@ -1,0 +1,47 @@
+$primary-color: #e87d1c;
+$secondary-color: #232b42;
+$neutral-color: #777;
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: $secondary-color;
+  .secondary {
+    &__bg {
+      background-color: $secondary-color;
+    }
+    &__color {
+      color: $secondary-color;
+    }
+  }
+  .primary {
+    &__bg {
+      background-color: $primary-color;
+    }
+    &__color {
+      color: $primary-color;
+    }
+  }
+  .btn-link {
+    color: $secondary-color;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+  .badge-primary {
+    background-color: $secondary-color;
+  }
+  .badge-secondary {
+    background-color:$primary-color;
+  }
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  button:focus {
+    outline-color: #e87d1c;
+  }
+}
+
