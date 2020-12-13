@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    host: "https://bunny-app.herokuapp.com/",
+    host: "https://bunny-app.herokuapp.com//api/v1/",
     users: [],
     tasks: [],
     filteredTasks: [],
