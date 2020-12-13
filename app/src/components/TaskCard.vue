@@ -96,7 +96,6 @@ export default {
         const params = { description: value, userId: this.selectedUser.id };
         const update = await this.$store.dispatch("createTask", params);
         if (update.status == 200) {
-          console.log("create get task")
           this.$store.dispatch("getTasks");
         }
       }

@@ -91,7 +91,6 @@ export default {
       } else {
         const update = await this.$store.dispatch("createUser", value);
         if (update.status == 200) {
-          console.log("sillego")
           this.selectedUser = {};
           this.filterTasks();
           this.isSelected = !this.isSelected;
@@ -116,22 +115,18 @@ export default {
         el.classList.remove("active");
       }
       this.isSelected = !this.isSelected;
-      console.log(this.isSelected, this.selectedUser,"set user")
       if(Object.keys(this.selectedUser).length == 0 || this.selectedUser !== this.user || this.isEditing ) {
         this.selectedUser = this.user;
       } else {
-        console.log("aqui")
         this.selectedUser = {};
       }
       this.filterTasks();
     }, 
     filterTasks() {
       if(Object.keys(this.selectedUser).length == 0) {
-        console.log("no filtar")
         this.filteredTasks = this.tasks;
         return;
       } else {
-         console.log("filtar")
           this.filteredTasks = this.tasks.filter(
           (task) => task.userId == this.selectedUser.id
         );

@@ -49,8 +49,8 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
    adapter: process.env.MAIN_DB_ADAPTER,
-   url: 'mongodb://' + process.env.MAIN_DB_USER + ':' + process.env.MAIN_DB_PASSWORD + '@' + process.env.MAIN_DB_HOST + ':' + process.env.MAIN_DB_PORT + '/' + process.env.MAIN_DB_DB,
-
+  //  url: 'mongodb://' + process.env.MAIN_DB_USER + ':' + process.env.MAIN_DB_PASSWORD + '@' + process.env.MAIN_DB_HOST + ':' + process.env.MAIN_DB_PORT + '/' + process.env.MAIN_DB_DB,
+    url: 'mongodb+srv://'+ process.env.MAIN_DB_USER + ':' + process.env.MAIN_DB_PASSWORD + '@bunny.sk2k7.mongodb.net/' + process.env.MAIN_DB_DB + '?retryWrites=true&w=majority'
   },
 
 
