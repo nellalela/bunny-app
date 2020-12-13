@@ -6,11 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    host:
-      process.env.NODE_ENV === "production"
-        ? " "
-        : "http://localhost:1337/api/v1/",
-
+    host: "https://bunny-app.herokuapp.com/",
     users: [],
     tasks: [],
     filteredTasks: [],
