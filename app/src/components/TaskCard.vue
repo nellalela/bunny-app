@@ -2,7 +2,7 @@
     li.list-group-item.mt-2.d-flex.align-items-center
       b-form-checkbox.mr-auto(
         @change="updateTask($event, 'status')"
-        v-model="status"
+        v-model="task.status"
         name="checkbox-1"
         value="done"
         unchecked-value="pending"
@@ -41,7 +41,6 @@ export default {
   props: { task: Object },
   data() {
     return {
-      status: this.task.status,
       isEditing: false,
     };
   },
