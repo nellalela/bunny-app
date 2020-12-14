@@ -44,7 +44,7 @@ Run local
 __MongoDB must be installed and started__
 
 Install dependencies
-```yarn install```
+```npm install```
 
 Create .env with the following info 
 ```PROJECT_NAME="bunny"
