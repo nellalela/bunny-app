@@ -47,6 +47,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     default: {
+      adapter: process.env.MAIN_DB_ADAPTER,
+      url: 'mongodb://'  + process.env.MAIN_DB_USER + ':' + process.env.MAIN_DB_PASSWORD + '@bunny-shard-00-00.sk2k7.mongodb.net:27017,bunny-shard-00-01.sk2k7.mongodb.net:27017,bunny-shard-00-02.sk2k7.mongodb.net:27017/'+ process.env.MAIN_DB_DB +'?ssl=true&replicaSet=atlas-eyy5wn-shard-0&authSource=admin&retryWrites=true&w=majority'
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
       //--------------------------------------------------------------------------
