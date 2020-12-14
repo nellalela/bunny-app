@@ -3,11 +3,16 @@ This fullstack project consists in a To-do web app and two sets of REST API endp
 
 ### ✨Deployed project✨
 
+Client - [bunny-app.netlify.app](https://bunny-app.netlify.app/)
+
+Server - [bunny-app.herokuapp.com](https://bunny-app.herokuapp.com)
+
 ### 🖥 Front Frameworks & libraries
 The front "app" is structured in one main view "Home" that contains a "Header", "UserList" and "TaskList" components. UserList and TaskList contain the components "UserCard" and "TaskCard" to render individual users and tasks.
 
 * VueJs
 * Bootstrap-vue
+* SCSS
 * Pug
 * Axios
 * Vuex
