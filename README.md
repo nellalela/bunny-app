@@ -30,6 +30,8 @@ There is one main DB called "Bunny" with two collections "Task" and "User"
 
 ### 📌 Arquitecture
 
+![Diagram](diagram.png)
+
 ### 🔧 Setup Front
 
 Install dependencies
