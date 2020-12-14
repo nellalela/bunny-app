@@ -70,7 +70,7 @@ Add .env variables
 ```source .env```
 Lift local server
 ```sails lift``` or ```node app.js```
-```source .env```
+
 
 
 
